@@ -64,29 +64,24 @@ const resultsContainer = document.getElementById('results');
 
 const changeQuestionButton = document.getElementById('changeQuestion');
 
-/*---------------------------- Variables (state) ----------------------------*/
+const categoryContainer= document.getElementById('category')
 
+
+/*---------------------------- Variables (state) ----------------------------*/
+let gameState = 0 
 let scoreTotal = 0
 let questionCounter = 0
+let correctWrong = false
+
+
 
 /*------------------------ Cached Element References ------------------------*/
-const displayStart = () => {
+
+/*-------------------------------- Functions --------------------------------*/
+const init = () =>{
   startMessage.innerText = "Build a Nature Park Quiz"
   startButton.innerText = "Start"
 }
-const init = () =>{
-  displayStart()
-}
-init()
-
-const displayquiz = () => {
-  for (let i= 0; i < pmQuestions.length; i++){
-    // console.log(displayquiz)
-  }
-}
-/*-------------------------------- Functions --------------------------------*/
-
-
   const displayQuestion =() => {
     questionContainer.innerText = pmQuestions[questionCounter].question
   }
@@ -114,7 +109,7 @@ const displayquiz = () => {
     if (questionCounter < (pmQuestions.length-1) ){
     changeQuestionButton.innerText = 'Next Question'
   }
-  if (questionCounter === pmQuestions.length-1){
+  if (questionCounter === (pmQuestions.length-1)){
     changeQuestionButton.innerText = 'Completed Category'
   }  
 }
@@ -130,56 +125,92 @@ const displayquiz = () => {
   const resetChangeQuestionButton =() => {
     changeQuestionButton.innerText=""
   }
+const displayCompareContainer = () => {
+  if (correctWrong===true){
+    compareContainer.innerText = "Correct ! +2 points "
+  }
+  if (correctWrong===false){
+    compareContainer.innerText = "Incorrect ! no points for you. "
+  }
+}
+
+const displayCategoryContainer =() =>{
+  categoryContainer.innerText = "Categories"
+}
 
 
 const compareAnswer =(event)=> {
   if (event.target.innerText === pmQuestions[questionCounter].correctAnswer) {
-    compareContainer.innerText = "Correct ! +2 points "
     scoreTotal = scoreTotal + 2
-    displayScore()
+    correctWrong = true
   }
   if (event.target.innerText !== pmQuestions[questionCounter].correctAnswer ){
-    compareContainer.innerText = "Incorrect ! no points for you. "
-    displayScore()
+    correctWrong = false
   }
   }
 
-  const changeQuestionCounter = ()=> {
-    questionCounter= questionCounter + 1
-    console.log(questionCounter)
-  }
-  
 /*----------------------------- Event Listeners -----------------------------*/
 startButton.addEventListener('click', () =>{
-  displayQuestion()
-  displayOptiona()
-  displayOptionb()
-  displayOptionc()
-  displayOptiond()
-  removeStart()
+  gameState = gameState + 1
+  play()
 }
 )
 optionsElement.forEach((option) => {
   option.addEventListener('click', (event) =>{
-    displayResults()
+    gameState = gameState + 1
     compareAnswer(event)
-    displayChangeQuestionButton(questionCounter,pmQuestions)
-    displayquiz ()
-  }
+    play(event)
+    }
 )})
 
 changeQuestionButton.addEventListener('click', () =>{
-  if( questionCounter < pmQuestions.length-1){
-      changeQuestionCounter()
-      displayQuestion()
-      displayOptiona()
-      displayOptionb()
-      displayOptionc()
-      displayOptiond()
-      resetDisplayResults()
-      resetChangeQuestionButton()
+  if( questionCounter <= pmQuestions.length-1){
+    if (questionCounter < pmQuestions.length-1){
+      questionCounter= questionCounter + 1
+      gameState = gameState - 1
+      play()
+    }
+    if (questionCounter === pmQuestions.length-1){
+      // questionCounter= questionCounter + 1
+      changeCategory()
+      console.log(gameState)
+    }
+    }
   }
-}
 )
 
+const Start = () => {
+  if (gameState === 0){
+     init()
+  }
+}
+const play = () => {
+  if (gameState === 1 ){
+    displayQuestion()
+    displayOptiona()
+    displayOptionb()
+    displayOptionc()
+    displayOptiond()
 
+    removeStart()
+    resetDisplayResults()
+    resetChangeQuestionButton()
+    
+  }
+    
+if (gameState === 2){
+  displayCompareContainer()
+  displayScore()
+  displayResults()
+  displayChangeQuestionButton(questionCounter,pmQuestions)
+  console.log(questionCounter)
+
+}
+}
+const changeCategory = () => {{
+    displayCategoryContainer()
+  }
+}
+
+
+Start()
