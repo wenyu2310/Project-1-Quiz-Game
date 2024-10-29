@@ -31,6 +31,28 @@ const pmQuestions = [
   correctAnswer:"d: None of the above"
 },
 ]
+const categorylist =[ 
+  {
+    category: 'Horticulture',
+    score:[],
+    selected: false,
+  },
+  {
+    category: 'Project Management',
+    score:[],
+    selected: false,
+  },
+  {
+    category: 'Contract Management',
+    score:[],
+    selected: false,
+  },
+  {
+    category: 'Landscape Architecture',
+    score:[],
+    selected: false,
+  },
+]
 
 const cmQuestions = [
   {
@@ -44,7 +66,8 @@ const cmQuestions = [
    correctAnswer: "d: Director level of the operations team taking over"
   },
 ]
-
+c
+const scoreArray = []
 /*-------------------------------- Constants --------------------------------*/
 const startContainer = document.getElementById('start');
 const startMessage = document.getElementById('startmsg');
@@ -64,6 +87,7 @@ const resultsContainer = document.getElementById('results');
 
 const changeQuestionButton = document.getElementById('changeQuestion');
 
+const completedCategoryButton = document.getElementById('completedCategory')
 const categoryContainer= document.getElementById('category')
 
 
@@ -71,60 +95,89 @@ const categoryContainer= document.getElementById('category')
 let gameState = 0 
 let scoreTotal = 0
 let questionCounter = 0
+let questionAnswered = false
 let correctWrong = false
 
 
 
 /*------------------------ Cached Element References ------------------------*/
 
-/*-------------------------------- Functions --------------------------------*/
+/*-------------------------------- Display Functions --------------------------------*/
 const init = () =>{
   startMessage.innerText = "Build a Nature Park Quiz"
   startButton.innerText = "Start"
 }
-  const displayQuestion =() => {
-    questionContainer.innerText = pmQuestions[questionCounter].question
-  }
-  const displayOptiona=() => {
-    optionaElement.innerText = "a: "+ pmQuestions[questionCounter].answers.a
-  }
-  const displayOptionb=() => {
-    optionbElement.innerText = "b: "+ pmQuestions[questionCounter].answers.b
-  }
-  const displayOptionc=() => {
-    optioncElement.innerText = "c: "+ pmQuestions[questionCounter].answers.c
-  }
-  const displayOptiond=() => {
-    optiondElement.innerText = "d: "+ pmQuestions[questionCounter].answers.d
-  }
-
-  const displayResults =() => {
-    resultsContainer.innerText = "The correct answer is " + pmQuestions[questionCounter].correctAnswer
-  }
-  const displayScore = () => {
-    scoreContainer.innerText = "Score : " + scoreTotal + " / 6"
-  }
-
-  const displayChangeQuestionButton = (questionCounter,pmQuestions) => {
-    if (questionCounter < (pmQuestions.length-1) ){
-    changeQuestionButton.innerText = 'Next Question'
-  }
-  if (questionCounter === (pmQuestions.length-1)){
-    changeQuestionButton.innerText = 'Completed Category'
-  }  
-}
-
   const removeStart =() => {
     startMessage.innerText = ""
   startButton.innerText = ""
+  }
+
+  const displayQuestion =() => {
+    questionContainer.innerText = pmQuestions[questionCounter].question
+  }
+  const resetQuestion =() => {
+    questionContainer.innerText = ""
+  }
+
+
+  const displayOptiona=() => {
+    optionaElement.innerText = "a: "+ pmQuestions[questionCounter].answers.a
+  }
+  const resetOptiona=() => {
+    optionaElement.innerText = ""
+  }
+
+
+  const displayOptionb=() => {
+    optionbElement.innerText = "b: "+ pmQuestions[questionCounter].answers.b
+  }
+  const resetOptionb=() => {
+    optionbElement.innerText = ""
+  }
+
+  const displayOptionc=() => {
+    optioncElement.innerText = "c: "+ pmQuestions[questionCounter].answers.c
+  }
+  const resetOptionc=() => {
+    optioncElement.innerText = ""
+  }
+
+  const displayOptiond=() => {
+    optiondElement.innerText = "d: "+ pmQuestions[questionCounter].answers.d
+  }
+  const resetOptiond=() => {
+    optiondElement.innerText = ""
+  }
+
+
+  const displayResults =() => {
+    resultsContainer.innerText = "The correct answer is " + pmQuestions[questionCounter].correctAnswer
   }
   const resetDisplayResults = () => {
     resultsContainer.innerText = "",
     compareContainer.innerText = "" 
   }
+  
+  const displayScore = () => {
+    scoreContainer.innerText = "Score : " + scoreTotal + " / 6"
+  }
+  const resetdisplayScore = () => {
+    scoreContainer.innerText = ""
+  }
+
+  const displayChangeQuestionButton = () => {
+    if (questionCounter < (pmQuestions.length-1) ){
+    changeQuestionButton.innerText = 'Next Question'
+  }
+  if (questionCounter === (pmQuestions.length-1)){
+    changeQuestionButton.innerText = ''
+  }  
+}
   const resetChangeQuestionButton =() => {
     changeQuestionButton.innerText=""
   }
+
+
 const displayCompareContainer = () => {
   if (correctWrong===true){
     compareContainer.innerText = "Correct ! +2 points "
@@ -134,11 +187,39 @@ const displayCompareContainer = () => {
   }
 }
 
-const displayCategoryContainer =() =>{
-  categoryContainer.innerText = "Categories"
+const displayCategoryContainer =(event) =>{
+  for(let i=0; i<categorylist.length; i++){
+    if(categorylist[i].selected===false){ 
+      const eachCategory = document.createElement('div')
+      eachCategory.innerText =categorylist[i].category
+      categoryContainer.appendChild(eachCategory)
+      eachCategory.addEventListener('click',(event)=>{
+      gameState = 1
+      play()
+      console.log(eachCategory)
+      for(let i=0; i<categorylist.length; i++){
+        if(eachCategory.innerText===categorylist[i].category){
+          categorylist[i].selected= true
+        }      
+      } 
+  console.log(categorylist)
+      })
+    }
+  }
 }
 
+const resetCategoryContainer =() => {
+ categoryContainer.innerHTML=""
+}
 
+const displayCompletedCategoryButton =() =>{
+  completedCategoryButton.innerText = "Completed Category"
+}
+const resetCompletedCategoryButton =() =>{
+  completedCategoryButton.innerText = ""
+}
+
+/*-------------------------------- Event Functions --------------------------------*/
 const compareAnswer =(event)=> {
   if (event.target.innerText === pmQuestions[questionCounter].correctAnswer) {
     scoreTotal = scoreTotal + 2
@@ -149,34 +230,45 @@ const compareAnswer =(event)=> {
   }
   }
 
+const removeCategories = (event) => {
+  categorylist.pop(event.target.innerText)
+}
 /*----------------------------- Event Listeners -----------------------------*/
 startButton.addEventListener('click', () =>{
-  gameState = gameState + 1
+  gameState = 2
   play()
+  console.log("Question"+ questionCounter)
+  console.log("Game state"+gameState)
 }
 )
+
+
 optionsElement.forEach((option) => {
   option.addEventListener('click', (event) =>{
-    gameState = gameState + 1
-    compareAnswer(event)
-    play(event)
+    if (questionAnswered=== false){
+         questionAnswered = true
+          compareAnswer(event)
+          play() 
     }
-)})
+  })
+})
 
 changeQuestionButton.addEventListener('click', () =>{
   if( questionCounter <= pmQuestions.length-1){
-    if (questionCounter < pmQuestions.length-1){
       questionCounter= questionCounter + 1
-      gameState = gameState - 1
+      questionAnswered = false
       play()
-    }
-    if (questionCounter === pmQuestions.length-1){
-      // questionCounter= questionCounter + 1
-      changeCategory()
-      console.log(gameState)
-    }
+      console.log("Question"+ questionCounter)
+      console.log("Game state"+gameState)
     }
   }
+)
+
+completedCategoryButton.addEventListener('click',() =>{
+  gameState= 2
+  play()
+}
+
 )
 
 const Start = () => {
@@ -186,31 +278,50 @@ const Start = () => {
 }
 const play = () => {
   if (gameState === 1 ){
+  if (questionAnswered=== false ){
     displayQuestion()
     displayOptiona()
     displayOptionb()
     displayOptionc()
     displayOptiond()
 
-    removeStart()
+
+    resetCategoryContainer()
     resetDisplayResults()
     resetChangeQuestionButton()
     
   }
     
-if (gameState === 2){
+if (questionAnswered === true ){
   displayCompareContainer()
   displayScore()
   displayResults()
-  displayChangeQuestionButton(questionCounter,pmQuestions)
-  console.log(questionCounter)
+  displayChangeQuestionButton()
+  // console.log(questionCounter)
+}
+
+if ((questionCounter === pmQuestions.length-1) && (questionAnswered === true)){
+  displayCompletedCategoryButton()
+  scoreArray.push(scoreTotal)
+  // console.log(scoreArray)
+}
 
 }
-}
-const changeCategory = () => {{
-    displayCategoryContainer()
+if (gameState === 2){
+  displayCategoryContainer()
+  removeStart()
+  resetDisplayResults()
+  resetChangeQuestionButton()
+  resetQuestion()
+  resetOptiona()
+  resetOptionb()
+  resetOptionc()
+  resetOptiond()
+  resetdisplayScore()
+  resetCompletedCategoryButton()
   }
 }
+
 
 
 Start()
