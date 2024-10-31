@@ -9,7 +9,7 @@ const pmQuestions = [
     d: "Funding",
   },
   correctAnswer: "Landuse Planning",
-  category : "Project Management "
+  category : "Project Management"
 },
 {
   question: "2. What is the first step that a park development manager take decide if the project requires Environmental Impact Assessment?",
@@ -20,7 +20,7 @@ const pmQuestions = [
     d: "Refer to Enviromental Impact Assessment Framework and submit Form A",
   },
   correctAnswer: "Refer to Enviromental Impact Assessment Framework and submit Form A",
-  category : "Project Management "
+  category : "Project Management"
 },
 {
   question: "3. What conditions does a park development manager NOT decide when deciding on method of contracting method to develop a park? ",
@@ -31,8 +31,107 @@ const pmQuestions = [
     d: "None of the above"
   },
   correctAnswer:"d: None of the above",
-  category : "Project Management "
+  category : "Project Management"
 },
+{
+question: " Who signs off the project brief?",
+answers:{
+  a: "CEO",
+  b: "Cluster Head",
+  c: "Park Planning",
+  d:" Director level of the operations team taking over",
+},
+ correctAnswer: "Director level of the operations team taking over",
+ category : "Contract Management"
+},
+{
+  question: " When can term contract civil works be used for park development?",
+  answers:{
+    a: "When cost of development works is more than $1,000,000",
+    b: "When there are many star rate items as part of the development work",
+    c: "When cost of development works is less than $500,000 and works are in the price schedule of rates",
+    d: "When the funding timeline is tight",
+  },
+   correctAnswer: "When cost of development works is less than $500,000 and works are in the price schedule of rates",
+   category : "Contract Management"
+  },
+  {
+    question: " According to PSCCOC, what is the contractor's responsibility when applying for an Extension of Time (EOT)?",
+    answers:{
+    a: "To submit a written application only after the project completion date",
+    b: "To provide evidence of the delay and its impact on the project timeline",
+    c: "To automatically receive the EOT as soon as an application is submitted",
+    d: "To submit an EOT request only if instructed by the Engineer or Project Manager",
+  },
+    correctAnswer: "To provide evidence of the delay and its impact on the project timeline",
+    category : "Contract Management"
+  },
+  {
+    question: "What is one of the main benefits of planting native trees in Singapore's urban landscapes?",
+    answers:{
+      a: "Native trees require more frequent watering than non-native species",
+      b: "They enhance biodiversity by providing food and habitat for local wildlife",
+      c: "Native trees grow faster and require less pruning than imported trees",
+      d: "They improve soil quality for agricultural crop planting",
+    },
+     correctAnswer: "They enhance biodiversity by providing food and habitat for local wildlife",
+     category : "Horticulture"
+    },
+    {
+      question: "In Singapore's park development, how does horticulture contribute to sustainable urban planning?",
+      answers:{
+        a: "By introducing foreign plant species that require more water",
+        b: "By using native and adaptive plants that reduce maintenance and water needs",
+        c: "By focusing on monoculture planting for consistent landscaping",
+        d: "By planting exclusively ornamental species for aesthetic purposes",
+      },
+       correctAnswer: "By using native and adaptive plants that reduce maintenance and water needs",
+       category : "Horticulture"
+      },
+      {
+        question: "Which of the following native tree species is commonly chosen in Singapore’s park development for its low maintenance requirements?",
+        answers:{
+        a: "Tembusu (Fagraea fragrans)",
+        b: "Rain Tree (Samanea saman)",
+        c: "African Mahogany (Khaya senegalensis)",
+        d: "Angsana (Pterocarpus indicus)",
+      },
+        correctAnswer: "Tembusu (Fagraea fragrans)",
+        category : "Park Design"
+      },
+      {
+        question: "What is one of the main benefits of planting native trees in Singapore's urban landscapes?",
+        answers:{
+          a: "Native trees require more frequent watering than non-native species",
+          b: "They enhance biodiversity by providing food and habitat for local wildlife",
+          c: "Native trees grow faster and require less pruning than imported trees",
+          d: "They improve soil quality for agricultural crop planting",
+        },
+         correctAnswer: "They enhance biodiversity by providing food and habitat for local wildlife",
+         category : "Park Design"
+        },
+        {
+          question: "In Singapore's park development, how does horticulture contribute to sustainable urban planning?",
+          answers:{
+            a: "By introducing foreign plant species that require more water",
+            b: "By using native and adaptive plants that reduce maintenance and water needs",
+            c: "By focusing on monoculture planting for consistent landscaping",
+            d: "By planting exclusively ornamental species for aesthetic purposes",
+          },
+           correctAnswer: "By using native and adaptive plants that reduce maintenance and water needs",
+           category : "Park Design"
+          },
+          {
+            question: "  Which of the following native tree species is commonly chosen in Singapore’s park development for its low maintenance requirements?",
+            answers:{
+            a: "Tembusu (Fagraea fragrans)",
+            b: "Rain Tree (Samanea saman)",
+            c: "African Mahogany (Khaya senegalensis)",
+            d: "Angsana (Pterocarpus indicus)",
+          },
+            correctAnswer: "Tembusu (Fagraea fragrans)",
+            category : "Horticulture"
+          }
 ]
 const categorylist =[ 
   {
@@ -51,24 +150,12 @@ const categorylist =[
     selected: false,
   },
   {
-    category: 'Landscape Architecture',
+    category: 'Park Design',
     score:[],
     selected: false,
   },
 ]
 
-const cmQuestions = [
-  {
-    question: " Who signs off the project brief?",
-  answers:{
-    a: "CEO",
-    b: "Cluster Head",
-    c: "Park Planning",
-    d:" Director level of the operations team taking over",
-  },
-   correctAnswer: "Director level of the operations team taking over"
-  },
-]
 
 const scoreArray = []
 /*-------------------------------- Constants --------------------------------*/
@@ -102,7 +189,8 @@ let scoreTotal = 0
 let questionCounter = 0
 let questionAnswered = false
 let correctWrong = false
-
+let currentCategory =""
+let selectedCategoryQuestions= []
 
 
 /*------------------------ Cached Element References ------------------------*/
@@ -118,7 +206,7 @@ const init = () =>{
   }
 
   const displayQuestion =() => {
-    questionContainer.innerText = pmQuestions[questionCounter].question
+    questionContainer.innerText = selectedCategoryQuestions[questionCounter].question
   }
   const resetQuestion =() => {
     questionContainer.innerText = ""
@@ -126,7 +214,7 @@ const init = () =>{
 
 
   const displayOptiona=() => {
-    optionaElement.innerText = pmQuestions[questionCounter].answers.a
+    optionaElement.innerText = selectedCategoryQuestions[questionCounter].answers.a
   }
   const resetOptiona=() => {
     optionaElement.innerText = ""
@@ -134,21 +222,21 @@ const init = () =>{
 
 
   const displayOptionb=() => {
-    optionbElement.innerText = pmQuestions[questionCounter].answers.b
+    optionbElement.innerText = selectedCategoryQuestions[questionCounter].answers.b
   }
   const resetOptionb=() => {
     optionbElement.innerText = ""
   }
 
   const displayOptionc=() => {
-    optioncElement.innerText = pmQuestions[questionCounter].answers.c
+    optioncElement.innerText = selectedCategoryQuestions[questionCounter].answers.c
   }
   const resetOptionc=() => {
     optioncElement.innerText = ""
   }
 
   const displayOptiond=() => {
-    optiondElement.innerText = pmQuestions[questionCounter].answers.d
+    optiondElement.innerText = selectedCategoryQuestions[questionCounter].answers.d
   }
   const resetOptiond=() => {
     optiondElement.innerText = ""
@@ -156,7 +244,7 @@ const init = () =>{
 
 
   const displayResults =() => {
-    resultsContainer.innerText = "The correct answer is " + pmQuestions[questionCounter].correctAnswer
+    resultsContainer.innerText = "The correct answer is " + selectedCategoryQuestions[questionCounter].correctAnswer
   }
   const resetDisplayResults = () => {
     resultsContainer.innerText = "",
@@ -171,10 +259,10 @@ const init = () =>{
   }
 
   const displayChangeQuestionButton = () => {
-    if (questionCounter < (pmQuestions.length-1) ){
+    if (questionCounter < (selectedCategoryQuestions.length-1) ){
     changeQuestionButton.innerText = 'Next Question'
   }
-  if (questionCounter === (pmQuestions.length-1)){
+  if (questionCounter === (selectedCategoryQuestions.length-1)){
     changeQuestionButton.innerText = ''
   }  
 }
@@ -215,11 +303,11 @@ const resetCompletedCategoryButton =() =>{
 
 /*-------------------------------- Event Functions --------------------------------*/
 const compareAnswer =(event)=> {
-  if (event.target.innerText === pmQuestions[questionCounter].correctAnswer) {
+  if (event.target.innerText === selectedCategoryQuestions[questionCounter].correctAnswer) {
     scoreTotal = scoreTotal + 2
     correctWrong = true
   }
-  if (event.target.innerText !== pmQuestions[questionCounter].correctAnswer ){
+  if (event.target.innerText !== selectedCategoryQuestions[questionCounter].correctAnswer ){
     correctWrong = false
   }
   }
@@ -228,29 +316,32 @@ const categorySelected = (event)=>{
   console.log(event.target.innerText)
   for (let i=0 ; i<categorylist.length; i++){
     if(categorylist[i].category === event.target.innerText){
-      categorylist[0].selected = true
-      console.log(categorylist)
+      categorylist[i].selected = true
+      currentCategory =event.target.innerText
+      console.log(currentCategory)
+      selectedCategoryQuestions= pmQuestions.filter( pmQuestion => pmQuestion.category === currentCategory)
     }
   }
+  console.log(selectedCategoryQuestions)
 }
-const removeCategories = (event) => {
-  categorylist.pop(event.target.innerText)
-}
+
+
 /*----------------------------- Event Listeners -----------------------------*/
 startButton.addEventListener('click', () =>{
   gameState = 2
   play()
   console.log("Question"+ questionCounter)
   console.log("Game state"+gameState)
-}
-)
+})
 
 categoryElement.forEach((category) => {
   category.addEventListener('click',(event) => {
+    questionCounter = 0
+    questionAnswered= false
     gameState = 1
     categorySelected(event)
     play()
-
+    console.log(questionCounter)
   })
 })
 
@@ -279,9 +370,7 @@ changeQuestionButton.addEventListener('click', () =>{
 completedCategoryButton.addEventListener('click',() =>{
   gameState= 2
   play()
-}
-
-)
+})
 
 const Start = () => {
   if (gameState === 0){
@@ -300,7 +389,6 @@ const play = () => {
     resetCategoryContainer()
     resetDisplayResults()
     resetChangeQuestionButton()
-    
   }
     
 if (questionAnswered === true ){
@@ -308,12 +396,12 @@ if (questionAnswered === true ){
   displayScore()
   displayResults()
   displayChangeQuestionButton()
-  // console.log(questionCounter)
+  console.log()
 }
 
-if ((questionCounter === pmQuestions.length-1) && (questionAnswered === true)){
+if ((questionCounter === selectedCategoryQuestions.length-1) && (questionAnswered === true)){
   displayCompletedCategoryButton()
-  scoreArray.push(scoreTotal)
+  scoreArray.push(questionCounter)
   // console.log(scoreArray)
 }
 
@@ -330,6 +418,7 @@ if (gameState === 2){
   resetOptiond()
   resetdisplayScore()
   resetCompletedCategoryButton()
+  questionCounter = 0
   }
 }
 
