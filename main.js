@@ -8,7 +8,8 @@ const pmQuestions = [
     c: "Design",
     d: "Funding",
   },
-  correctAnswer: "a: Landuse Planning"
+  correctAnswer: "Landuse Planning",
+  category : "Project Management "
 },
 {
   question: "2. What is the first step that a park development manager take decide if the project requires Environmental Impact Assessment?",
@@ -18,7 +19,8 @@ const pmQuestions = [
     c: "Email National Biodiversity Centre",
     d: "Refer to Enviromental Impact Assessment Framework and submit Form A",
   },
-  correctAnswer: "d: Refer to Enviromental Impact Assessment Framework and submit Form A" 
+  correctAnswer: "Refer to Enviromental Impact Assessment Framework and submit Form A",
+  category : "Project Management "
 },
 {
   question: "3. What conditions does a park development manager NOT decide when deciding on method of contracting method to develop a park? ",
@@ -28,7 +30,8 @@ const pmQuestions = [
     c: "Public Feedback",
     d: "None of the above"
   },
-  correctAnswer:"d: None of the above"
+  correctAnswer:"d: None of the above",
+  category : "Project Management "
 },
 ]
 const categorylist =[ 
@@ -63,10 +66,10 @@ const cmQuestions = [
     c: "Park Planning",
     d:" Director level of the operations team taking over",
   },
-   correctAnswer: "d: Director level of the operations team taking over"
+   correctAnswer: "Director level of the operations team taking over"
   },
 ]
-c
+
 const scoreArray = []
 /*-------------------------------- Constants --------------------------------*/
 const startContainer = document.getElementById('start');
@@ -88,7 +91,9 @@ const resultsContainer = document.getElementById('results');
 const changeQuestionButton = document.getElementById('changeQuestion');
 
 const completedCategoryButton = document.getElementById('completedCategory')
-const categoryContainer= document.getElementById('category')
+
+const categoryContainer= document.getElementById('categorycontainer')
+const categoryElement = document.querySelectorAll('.category')
 
 
 /*---------------------------- Variables (state) ----------------------------*/
@@ -121,7 +126,7 @@ const init = () =>{
 
 
   const displayOptiona=() => {
-    optionaElement.innerText = "a: "+ pmQuestions[questionCounter].answers.a
+    optionaElement.innerText = pmQuestions[questionCounter].answers.a
   }
   const resetOptiona=() => {
     optionaElement.innerText = ""
@@ -129,21 +134,21 @@ const init = () =>{
 
 
   const displayOptionb=() => {
-    optionbElement.innerText = "b: "+ pmQuestions[questionCounter].answers.b
+    optionbElement.innerText = pmQuestions[questionCounter].answers.b
   }
   const resetOptionb=() => {
     optionbElement.innerText = ""
   }
 
   const displayOptionc=() => {
-    optioncElement.innerText = "c: "+ pmQuestions[questionCounter].answers.c
+    optioncElement.innerText = pmQuestions[questionCounter].answers.c
   }
   const resetOptionc=() => {
     optioncElement.innerText = ""
   }
 
   const displayOptiond=() => {
-    optiondElement.innerText = "d: "+ pmQuestions[questionCounter].answers.d
+    optiondElement.innerText = pmQuestions[questionCounter].answers.d
   }
   const resetOptiond=() => {
     optiondElement.innerText = ""
@@ -177,7 +182,6 @@ const init = () =>{
     changeQuestionButton.innerText=""
   }
 
-
 const displayCompareContainer = () => {
   if (correctWrong===true){
     compareContainer.innerText = "Correct ! +2 points "
@@ -187,29 +191,19 @@ const displayCompareContainer = () => {
   }
 }
 
-const displayCategoryContainer =(event) =>{
-  for(let i=0; i<categorylist.length; i++){
+const displayCategoryContainer =() =>{
+  for(let i=0; i<categoryElement.length; i++){
     if(categorylist[i].selected===false){ 
-      const eachCategory = document.createElement('div')
-      eachCategory.innerText =categorylist[i].category
-      categoryContainer.appendChild(eachCategory)
-      eachCategory.addEventListener('click',(event)=>{
-      gameState = 1
-      play()
-      console.log(eachCategory)
-      for(let i=0; i<categorylist.length; i++){
-        if(eachCategory.innerText===categorylist[i].category){
-          categorylist[i].selected= true
-        }      
-      } 
-  console.log(categorylist)
-      })
+      categoryElement[i].innerText =categorylist[i].category
     }
   }
 }
 
 const resetCategoryContainer =() => {
- categoryContainer.innerHTML=""
+  for(let i=0; i<categoryElement.length; i++){
+    categoryElement[i].innerText =""
+
+  }
 }
 
 const displayCompletedCategoryButton =() =>{
@@ -229,7 +223,16 @@ const compareAnswer =(event)=> {
     correctWrong = false
   }
   }
-
+  
+const categorySelected = (event)=>{
+  console.log(event.target.innerText)
+  for (let i=0 ; i<categorylist.length; i++){
+    if(categorylist[i].category === event.target.innerText){
+      categorylist[0].selected = true
+      console.log(categorylist)
+    }
+  }
+}
 const removeCategories = (event) => {
   categorylist.pop(event.target.innerText)
 }
@@ -241,6 +244,15 @@ startButton.addEventListener('click', () =>{
   console.log("Game state"+gameState)
 }
 )
+
+categoryElement.forEach((category) => {
+  category.addEventListener('click',(event) => {
+    gameState = 1
+    categorySelected(event)
+    play()
+
+  })
+})
 
 
 optionsElement.forEach((option) => {
@@ -285,7 +297,6 @@ const play = () => {
     displayOptionc()
     displayOptiond()
 
-
     resetCategoryContainer()
     resetDisplayResults()
     resetChangeQuestionButton()
@@ -321,7 +332,5 @@ if (gameState === 2){
   resetCompletedCategoryButton()
   }
 }
-
-
 
 Start()
