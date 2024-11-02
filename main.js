@@ -30,7 +30,7 @@ const pmQuestions = [
     c: "Public Feedback",
     d: "None of the above"
   },
-  correctAnswer:"d: None of the above",
+  correctAnswer:"None of the above",
   category : "Project Management"
 },
 {
@@ -136,22 +136,22 @@ answers:{
 const categorylist =[ 
   {
     category: 'Horticulture',
-    score:[],
+    score:0,
     selected: false,
   },
   {
     category: 'Project Management',
-    score:[],
+    score:0,
     selected: false,
   },
   {
     category: 'Contract Management',
-    score:[],
+    score:0,
     selected: false,
   },
   {
     category: 'Park Design',
-    score:[],
+    score:0,
     selected: false,
   },
 ]
@@ -182,21 +182,22 @@ const completedCategoryButton = document.getElementById('completedCategory')
 const categoryContainer= document.getElementById('categorycontainer')
 const categoryElement = document.querySelectorAll('.category')
 
-
+const nextLevelContainer = document.getElementById('nextLevel')
+const resetButton = document.getElementById('reset')
 /*---------------------------- Variables (state) ----------------------------*/
 let gameState = 0 
-let scoreTotal = 0
+let scoreCurrent = 0
 let questionCounter = 0
 let questionAnswered = false
 let correctWrong = false
 let currentCategory =""
 let selectedCategoryQuestions= []
-
+let totalScore = 0
 
 /*------------------------ Cached Element References ------------------------*/
 
 /*-------------------------------- Display Functions --------------------------------*/
-const init = () =>{
+const displayinit = () =>{
   startMessage.innerText = "Build a Nature Park Quiz"
   startButton.innerText = "Start"
 }
@@ -252,7 +253,7 @@ const init = () =>{
   }
   
   const displayScore = () => {
-    scoreContainer.innerText = "Score : " + scoreTotal + " / 6"
+    scoreContainer.innerText = "Score : " + scoreCurrent + " / 6"
   }
   const resetdisplayScore = () => {
     scoreContainer.innerText = ""
@@ -301,10 +302,23 @@ const resetCompletedCategoryButton =() =>{
   completedCategoryButton.innerText = ""
 }
 
+const displayRestartButton = () =>{
+  resetButton.innerText = "Start Again"
+}
+const removeResetButton = () =>{
+  resetButton.innerText = ""
+}
+
+const resetNextLevelContainer = () => {
+  nextLevelContainer.innerText=""
+}
+
+
+
 /*-------------------------------- Event Functions --------------------------------*/
-const compareAnswer =(event)=> {
+const addScore =(event)=> {
   if (event.target.innerText === selectedCategoryQuestions[questionCounter].correctAnswer) {
-    scoreTotal = scoreTotal + 2
+    scoreCurrent = scoreCurrent + 2
     correctWrong = true
   }
   if (event.target.innerText !== selectedCategoryQuestions[questionCounter].correctAnswer ){
@@ -325,7 +339,26 @@ const categorySelected = (event)=>{
   console.log(selectedCategoryQuestions)
 }
 
+const saveScore = () =>{
+  for (let i=0 ; i<categorylist.length;i++){
+    if (categorylist[i].category === currentCategory){
+      categorylist[i].score=scoreCurrent
+    }
+  }
+}
 
+const getTotalScore = () =>{
+  for (let i=0 ; i<categorylist.length;i++){
+    totalScore = totalScore + Number(categorylist[i].score)
+    }
+  }
+
+const resetCategoryList= ()=>{
+  for (let i=0 ; i<categorylist.length;i++){
+     categorylist[i].score=[],
+     categorylist[i].selected= false
+    }
+  }
 /*----------------------------- Event Listeners -----------------------------*/
 startButton.addEventListener('click', () =>{
   gameState = 2
@@ -339,6 +372,7 @@ categoryElement.forEach((category) => {
     questionCounter = 0
     questionAnswered= false
     gameState = 1
+    scoreCurrent = 0
     categorySelected(event)
     play()
     console.log(questionCounter)
@@ -350,8 +384,10 @@ optionsElement.forEach((option) => {
   option.addEventListener('click', (event) =>{
     if (questionAnswered=== false){
          questionAnswered = true
-          compareAnswer(event)
+          addScore(event)
           play() 
+          console.log(scoreCurrent)
+          console.log(categorylist)
     }
   })
 })
@@ -363,18 +399,46 @@ changeQuestionButton.addEventListener('click', () =>{
       play()
       console.log("Question"+ questionCounter)
       console.log("Game state"+gameState)
+      
     }
   }
 )
 
 completedCategoryButton.addEventListener('click',() =>{
-  gameState= 2
+  gameState= 4
+  saveScore()
+  getTotalScore()
   play()
+  console.log(categorylist)
+  console.log(totalScore)
 })
 
+resetButton.addEventListener('click',() =>{
+  gameState=0
+  scoreCurrent = 0
+  questionCounter = 0
+  questionAnswered = false
+  correctWrong = false
+  currentCategory =""
+  selectedCategoryQuestions= []
+  resetCategoryList()
+  Start()
+})
+/*----------------------------- Renders -----------------------------*/
 const Start = () => {
   if (gameState === 0){
-     init()
+     displayinit()
+     resetDisplayResults()
+     resetChangeQuestionButton()
+     resetQuestion()
+     resetOptiona()
+     resetOptionb()
+     resetOptionc()
+     resetOptiond()
+     resetdisplayScore()
+     resetCompletedCategoryButton()
+     removeResetButton()
+     resetNextLevelContainer()
   }
 }
 const play = () => {
@@ -389,6 +453,9 @@ const play = () => {
     resetCategoryContainer()
     resetDisplayResults()
     resetChangeQuestionButton()
+    resetNextLevelContainer()
+    
+    displayRestartButton()
   }
     
 if (questionAnswered === true ){
@@ -406,9 +473,41 @@ if ((questionCounter === selectedCategoryQuestions.length-1) && (questionAnswere
 }
 
 }
-if (gameState === 2){
+
+if (gameState === 4){
+  if(scoreCurrent < 4){
+    removeStart()
+    resetDisplayResults()
+    resetChangeQuestionButton()
+    resetQuestion()
+    resetOptiona()
+    resetOptionb()
+    resetOptionc()
+    resetOptiond()
+    resetdisplayScore()
+    nextLevelContainer.innerText= currentCategory+ ": "+ scoreCurrent+ " / 6. "+ "You failed. "
+    displayRestartButton()
+    resetCompletedCategoryButton()
+  }
+  if(scoreCurrent>= 4 && totalScore >=22 ){
+    displayCategoryContainer()
+    removeStart()
+    displayRestartButton()
+    resetDisplayResults()
+    resetChangeQuestionButton()
+    resetQuestion()
+    resetOptiona()
+    resetOptionb()
+    resetOptionc()
+    resetOptiond()
+    resetdisplayScore()
+    resetCompletedCategoryButton()
+    nextLevelContainer.innerText= "Well done ! You got completed all categories! " + totalScore + " / 24."
+    }
+  if(scoreCurrent >= 4 && totalScore <=20 ){
   displayCategoryContainer()
   removeStart()
+  displayRestartButton()
   resetDisplayResults()
   resetChangeQuestionButton()
   resetQuestion()
@@ -418,8 +517,24 @@ if (gameState === 2){
   resetOptiond()
   resetdisplayScore()
   resetCompletedCategoryButton()
-  questionCounter = 0
+  console.log(totalScore)
+  nextLevelContainer.innerText= ` ${currentCategory}: ${scoreCurrent} / 6. You passed! Pick your next category`
   }
+  }
+if (gameState === 2){
+displayCategoryContainer()
+removeStart()
+resetDisplayResults()
+resetChangeQuestionButton()
+resetQuestion()
+resetOptiona()
+resetOptionb()
+resetOptionc()
+resetOptiond()
+resetdisplayScore()
+resetCompletedCategoryButton()
 }
+}
+
 
 Start()
