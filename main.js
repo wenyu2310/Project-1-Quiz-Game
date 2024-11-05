@@ -1,540 +1,407 @@
 /*-------------------------------- Questions --------------------------------*/
-const pmQuestions = [ 
-{
-  question: "1. What is the first step in a park development project?",
-  answers: {
-    a: "Landuse Planning",
-    b: "Environmental Impact Assessment",
-    c: "Design",
-    d: "Funding",
-  },
-  correctAnswer: "Landuse Planning",
-  category : "Project Management"
-},
-{
-  question: "2. What is the first step that a park development manager take decide if the project requires Environmental Impact Assessment?",
-  answers: {
-    a: "Check with the Park Planning team",
-    b: "Consult the nature groups",
-    c: "Email National Biodiversity Centre",
-    d: "Refer to Enviromental Impact Assessment Framework and submit Form A",
-  },
-  correctAnswer: "Refer to Enviromental Impact Assessment Framework and submit Form A",
-  category : "Project Management"
-},
-{
-  question: "3. What conditions does a park development manager NOT decide when deciding on method of contracting method to develop a park? ",
-  answers: {
-    a: "Project timeline",
-    b: "Funding",
-    c: "Public Feedback",
-    d: "None of the above"
-  },
-  correctAnswer:"None of the above",
-  category : "Project Management"
-},
-{
-question: " Who signs off the project brief?",
-answers:{
-  a: "CEO",
-  b: "Cluster Head",
-  c: "Park Planning",
-  d:" Director level of the operations team taking over",
-},
- correctAnswer: "Director level of the operations team taking over",
- category : "Contract Management"
-},
-{
-  question: " When can term contract civil works be used for park development?",
-  answers:{
-    a: "When cost of development works is more than $1,000,000",
-    b: "When there are many star rate items as part of the development work",
-    c: "When cost of development works is less than $500,000 and works are in the price schedule of rates",
-    d: "When the funding timeline is tight",
-  },
-   correctAnswer: "When cost of development works is less than $500,000 and works are in the price schedule of rates",
-   category : "Contract Management"
-  },
-  {
-    question: " According to PSCCOC, what is the contractor's responsibility when applying for an Extension of Time (EOT)?",
-    answers:{
-    a: "To submit a written application only after the project completion date",
-    b: "To provide evidence of the delay and its impact on the project timeline",
-    c: "To automatically receive the EOT as soon as an application is submitted",
-    d: "To submit an EOT request only if instructed by the Engineer or Project Manager",
-  },
-    correctAnswer: "To provide evidence of the delay and its impact on the project timeline",
-    category : "Contract Management"
-  },
-  {
-    question: "What is one of the main benefits of planting native trees in Singapore's urban landscapes?",
-    answers:{
-      a: "Native trees require more frequent watering than non-native species",
-      b: "They enhance biodiversity by providing food and habitat for local wildlife",
-      c: "Native trees grow faster and require less pruning than imported trees",
-      d: "They improve soil quality for agricultural crop planting",
-    },
-     correctAnswer: "They enhance biodiversity by providing food and habitat for local wildlife",
-     category : "Horticulture"
+import { pmQuestions } from "./questions";
+
+  const categorylist =[ 
+    {
+      category: 'Horticulture',
+      score:0,
+      selected: false,
     },
     {
-      question: "In Singapore's park development, how does horticulture contribute to sustainable urban planning?",
-      answers:{
-        a: "By introducing foreign plant species that require more water",
-        b: "By using native and adaptive plants that reduce maintenance and water needs",
-        c: "By focusing on monoculture planting for consistent landscaping",
-        d: "By planting exclusively ornamental species for aesthetic purposes",
-      },
-       correctAnswer: "By using native and adaptive plants that reduce maintenance and water needs",
-       category : "Horticulture"
-      },
-      {
-        question: "Which of the following native tree species is commonly chosen in Singapore’s park development for its low maintenance requirements?",
-        answers:{
-        a: "Tembusu (Fagraea fragrans)",
-        b: "Rain Tree (Samanea saman)",
-        c: "African Mahogany (Khaya senegalensis)",
-        d: "Angsana (Pterocarpus indicus)",
-      },
-        correctAnswer: "Tembusu (Fagraea fragrans)",
-        category : "Park Design"
-      },
-      {
-        question: "What is one of the main benefits of planting native trees in Singapore's urban landscapes?",
-        answers:{
-          a: "Native trees require more frequent watering than non-native species",
-          b: "They enhance biodiversity by providing food and habitat for local wildlife",
-          c: "Native trees grow faster and require less pruning than imported trees",
-          d: "They improve soil quality for agricultural crop planting",
-        },
-         correctAnswer: "They enhance biodiversity by providing food and habitat for local wildlife",
-         category : "Park Design"
-        },
-        {
-          question: "In Singapore's park development, how does horticulture contribute to sustainable urban planning?",
-          answers:{
-            a: "By introducing foreign plant species that require more water",
-            b: "By using native and adaptive plants that reduce maintenance and water needs",
-            c: "By focusing on monoculture planting for consistent landscaping",
-            d: "By planting exclusively ornamental species for aesthetic purposes",
-          },
-           correctAnswer: "By using native and adaptive plants that reduce maintenance and water needs",
-           category : "Park Design"
-          },
-          {
-            question: "  Which of the following native tree species is commonly chosen in Singapore’s park development for its low maintenance requirements?",
-            answers:{
-            a: "Tembusu (Fagraea fragrans)",
-            b: "Rain Tree (Samanea saman)",
-            c: "African Mahogany (Khaya senegalensis)",
-            d: "Angsana (Pterocarpus indicus)",
-          },
-            correctAnswer: "Tembusu (Fagraea fragrans)",
-            category : "Horticulture"
-          }
-]
-const categorylist =[ 
-  {
-    category: 'Horticulture',
-    score:0,
-    selected: false,
-  },
-  {
-    category: 'Project Management',
-    score:0,
-    selected: false,
-  },
-  {
-    category: 'Contract Management',
-    score:0,
-    selected: false,
-  },
-  {
-    category: 'Park Design',
-    score:0,
-    selected: false,
-  },
-]
+      category: 'Project Management',
+      score:0,
+      selected: false,
+    },
+    {
+      category: 'Contract Management',
+      score:0,
+      selected: false,
+    },
+    {
+      category: 'Park Design',
+      score:0,
+      selected: false,
+    },
+  ]
+  
+  /*-------------------------------- Constants --------------------------------*/
 
+  const startMessage = document.getElementById('startmsg');
+  const startButton = document.getElementById('startbutton')
+  
+  const scoreContainer = document.getElementById("score");
+  
+  const questionContainer = document.getElementById('question');
+  const optionsContainer = document.getElementById('optionscontainer');
+  const optionsElement = document.querySelectorAll('.options')
 
-const scoreArray = []
-/*-------------------------------- Constants --------------------------------*/
-const startContainer = document.getElementById('start');
-const startMessage = document.getElementById('startmsg');
-const startButton = document.getElementById('startbutton')
+  
+  const compareContainer = document.getElementById('compare');
+  const resultsContainer = document.getElementById('results');
+  
+  const changeQuestionButton = document.getElementById('changeQuestion');
+  
+  const completedCategoryButton = document.getElementById('completedCategory')
+  
+  const categoryContainer= document.getElementById('categorycontainer')
+  const categoryElement = document.querySelectorAll('.category')
+  
+  const nextLevelContainer = document.getElementById('nextLevel')
+  const restartButton = document.getElementById('restart')
 
-const scoreContainer = document.getElementById("score");
-
-const questionContainer = document.getElementById('question');
-const optionsElement = document.querySelectorAll('.options')
-const optionaElement = document.getElementById('a');
-const optionbElement = document.getElementById('b');
-const optioncElement = document.getElementById('c');
-const optiondElement = document.getElementById('d');
-
-const compareContainer = document.getElementById('compare');
-const resultsContainer = document.getElementById('results');
-
-const changeQuestionButton = document.getElementById('changeQuestion');
-
-const completedCategoryButton = document.getElementById('completedCategory')
-
-const categoryContainer= document.getElementById('categorycontainer')
-const categoryElement = document.querySelectorAll('.category')
-
-const nextLevelContainer = document.getElementById('nextLevel')
-const resetButton = document.getElementById('reset')
-/*---------------------------- Variables (state) ----------------------------*/
-let gameState = 0 
-let scoreCurrent = 0
-let questionCounter = 0
-let questionAnswered = false
-let correctWrong = false
-let currentCategory =""
-let selectedCategoryQuestions= []
-let totalScore = 0
-
-/*------------------------ Cached Element References ------------------------*/
-
-/*-------------------------------- Display Functions --------------------------------*/
-const displayinit = () =>{
-  startMessage.innerText = "Build a Nature Park Quiz"
-  startButton.innerText = "Start"
-}
-  const removeStart =() => {
-    startMessage.innerText = ""
-  startButton.innerText = ""
+  /*---------------------------- Variables (state) ----------------------------*/
+  let gameState = 0 
+  let scoreCurrent = 0
+  let questionCounter = 0
+  let questionAnswered = false
+  let correctWrong = false
+  let currentCategory =""
+  let selectedCategoryQuestions= []
+  let totalScore = 0
+  
+  /*------------------------ Cached Element References ------------------------*/
+  
+  /*-------------------------------- Display Functions --------------------------------*/
+  const displayStartMenu = () =>{
+    startMessage.classList.remove("hide")
+     startButton.classList.remove("hide")
   }
-
-  const displayQuestion =() => {
-    questionContainer.innerText = selectedCategoryQuestions[questionCounter].question
-  }
-  const resetQuestion =() => {
-    questionContainer.innerText = ""
-  }
-
-
-  const displayOptiona=() => {
-    optionaElement.innerText = selectedCategoryQuestions[questionCounter].answers.a
-  }
-  const resetOptiona=() => {
-    optionaElement.innerText = ""
-  }
-
-
-  const displayOptionb=() => {
-    optionbElement.innerText = selectedCategoryQuestions[questionCounter].answers.b
-  }
-  const resetOptionb=() => {
-    optionbElement.innerText = ""
-  }
-
-  const displayOptionc=() => {
-    optioncElement.innerText = selectedCategoryQuestions[questionCounter].answers.c
-  }
-  const resetOptionc=() => {
-    optioncElement.innerText = ""
-  }
-
-  const displayOptiond=() => {
-    optiondElement.innerText = selectedCategoryQuestions[questionCounter].answers.d
-  }
-  const resetOptiond=() => {
-    optiondElement.innerText = ""
-  }
-
-
-  const displayResults =() => {
-    resultsContainer.innerText = "The correct answer is " + selectedCategoryQuestions[questionCounter].correctAnswer
-  }
-  const resetDisplayResults = () => {
-    resultsContainer.innerText = "",
-    compareContainer.innerText = "" 
+    const removeStart =() => {
+      startMessage.classList.add("hide")
+      startButton.classList.add("hide")
+    }
+    
+  const displayCategoryContainer =() =>{
+    categoryContainer.classList.remove('hide')
+    for(let i=0; i<categoryElement.length; i++){
+      if(categorylist[i].selected===false){ 
+        categoryElement[i].innerText =categorylist[i].category
+        categoryElement[i].classList.remove('hide');
+      }
+    }
   }
   
-  const displayScore = () => {
-    scoreContainer.innerText = "Score : " + scoreCurrent + " / 6"
-  }
-  const resetdisplayScore = () => {
-    scoreContainer.innerText = ""
-  }
-
-  const displayChangeQuestionButton = () => {
-    if (questionCounter < (selectedCategoryQuestions.length-1) ){
-    changeQuestionButton.innerText = 'Next Question'
-  }
-  if (questionCounter === (selectedCategoryQuestions.length-1)){
-    changeQuestionButton.innerText = ''
-  }  
-}
-  const resetChangeQuestionButton =() => {
-    changeQuestionButton.innerText=""
-  }
-
-const displayCompareContainer = () => {
-  if (correctWrong===true){
-    compareContainer.innerText = "Correct ! +2 points "
-  }
-  if (correctWrong===false){
-    compareContainer.innerText = "Incorrect ! no points for you. "
-  }
-}
-
-const displayCategoryContainer =() =>{
-  for(let i=0; i<categoryElement.length; i++){
-    if(categorylist[i].selected===false){ 
-      categoryElement[i].innerText =categorylist[i].category
+  const resetCategoryContainer =() => {
+    categoryContainer.classList.add('hide')
+    for(let i=0; i<categoryElement.length; i++){
+      categoryElement[i].innerText=""
+      categoryElement[i].classList.add("hide")
     }
-  }
-}
-
-const resetCategoryContainer =() => {
-  for(let i=0; i<categoryElement.length; i++){
-    categoryElement[i].innerText =""
-
-  }
-}
-
-const displayCompletedCategoryButton =() =>{
-  completedCategoryButton.innerText = "Completed Category"
-}
-const resetCompletedCategoryButton =() =>{
-  completedCategoryButton.innerText = ""
-}
-
-const displayRestartButton = () =>{
-  resetButton.innerText = "Start Again"
-}
-const removeResetButton = () =>{
-  resetButton.innerText = ""
-}
-
-const resetNextLevelContainer = () => {
-  nextLevelContainer.innerText=""
-}
-
-
-
-/*-------------------------------- Event Functions --------------------------------*/
-const addScore =(event)=> {
-  if (event.target.innerText === selectedCategoryQuestions[questionCounter].correctAnswer) {
-    scoreCurrent = scoreCurrent + 2
-    correctWrong = true
-  }
-  if (event.target.innerText !== selectedCategoryQuestions[questionCounter].correctAnswer ){
-    correctWrong = false
-  }
   }
   
-const categorySelected = (event)=>{
-  console.log(event.target.innerText)
-  for (let i=0 ; i<categorylist.length; i++){
-    if(categorylist[i].category === event.target.innerText){
-      categorylist[i].selected = true
-      currentCategory =event.target.innerText
-      console.log(currentCategory)
-      selectedCategoryQuestions= pmQuestions.filter( pmQuestion => pmQuestion.category === currentCategory)
+    const displayQuestion =() => {
+      questionContainer.innerText = selectedCategoryQuestions[questionCounter].question
+    }
+    const removeQuestion =() => {
+      questionContainer.innerText = ""
+      questionContainer.classList.add("hide")
+    }
+  
+  
+    const displayOptions=() =>{
+      optionsContainer.classList.remove('hide')
+      for(let i=0; i<optionsElement.length; i++){
+          optionsElement[i].classList.remove('hide')
+          optionsElement[i].innerText =selectedCategoryQuestions[questionCounter].answers[i]
+        }
+      }
+    
+
+      const removeOptions=() => {
+        optionsContainer.classList.add('hide')
+        for(let i=0; i<optionsElement.length; i++){
+          optionsElement[i].innerText = '';
+          optionsElement[i].classList.add('hide')
+          // optionsElement[i].style.display = 'none'
+      }
+
+    }
+  
+    const displayResults =() => {
+      resultsContainer.classList.remove('hide')
+      resultsContainer.innerText = "The correct answer is: " + selectedCategoryQuestions[questionCounter].correctAnswer
+    }
+
+    const displayCompareContainer = () => {
+      compareContainer.classList.remove('hide')
+      if (correctWrong===true){
+        compareContainer.innerText = "Correct ! +2 points "
+      }
+      if (correctWrong===false){
+        compareContainer.innerText = "Incorrect ! no points for you. "
+      }
+    }
+
+    const resetDisplayResults = () => {
+      resultsContainer.innerText = ""
+      resultsContainer.classList.add('hide')
+      compareContainer.innerText = ""
+      compareContainer.classList.add('hide') 
+    }
+    
+    const displayScore = () => {
+      scoreContainer.classList.remove('hide')
+      scoreContainer.innerText = "Score : " + scoreCurrent + " / 6"
+    }
+    const resetdisplayScore = () => {
+      scoreContainer.innerText = ""
+      scoreContainer.classList.add('hide')
+    }
+  
+    const displayChangeQuestionButton = () => {
+      if (questionCounter < (selectedCategoryQuestions.length-1) ){
+      changeQuestionButton.classList.remove('hide')
+      changeQuestionButton.innerText = 'Next Question'
+    }
+    if (questionCounter === (selectedCategoryQuestions.length-1)){
+      resetChangeQuestionButton()
+    }  
+  }
+    const resetChangeQuestionButton =() => {
+      changeQuestionButton.classList.add('hide')
+      changeQuestionButton.innerText=""
+    }
+  
+  const displayCompletedCategoryButton =() =>{
+    completedCategoryButton.classList.remove('hide')
+    completedCategoryButton.innerText = "Completed Category"
+  }
+  const resetCompletedCategoryButton =() =>{
+    completedCategoryButton.innerText = ""
+    completedCategoryButton.classList.add('hide')
+  }
+  
+  const displayRestartButton = () =>{
+    restartButton.classList.remove('hide')
+    restartButton.innerText = "Start Again"
+  }
+  const removeRestartButton = () =>{
+    restartButton.innerText = ""
+    restartButton.classList.add('hide')
+  }
+  
+  const resetNextLevelContainer = () => {
+    nextLevelContainer.innerText=""
+    nextLevelContainer.classList.add('hide')
+  }
+  
+  
+  /*-------------------------------- Event Functions --------------------------------*/
+  const addScore =(event)=> {
+    if (event.target.innerText === selectedCategoryQuestions[questionCounter].correctAnswer) {
+      scoreCurrent = scoreCurrent + 2
+      correctWrong = true
+    }
+    if (event.target.innerText !== selectedCategoryQuestions[questionCounter].correctAnswer ){
+      correctWrong = false
+    }
+    }
+    
+  const categorySelected = (event)=>{
+    for (let i=0 ; i<categorylist.length; i++){
+      if(categorylist[i].category === event.target.innerText){
+        categorylist[i].selected = true
+        currentCategory =event.target.innerText
+        selectedCategoryQuestions= pmQuestions.filter( pmQuestion => pmQuestion.category === currentCategory)
+      }
     }
   }
-  console.log(selectedCategoryQuestions)
-}
-
-const saveScore = () =>{
-  for (let i=0 ; i<categorylist.length;i++){
-    if (categorylist[i].category === currentCategory){
-      categorylist[i].score=scoreCurrent
+  
+  const saveScore = () =>{
+    for (let i=0 ; i<categorylist.length;i++){
+      if (categorylist[i].category === currentCategory){
+        categorylist[i].score=scoreCurrent
+      }
     }
   }
-}
-
-const getTotalScore = () =>{
-  for (let i=0 ; i<categorylist.length;i++){
-    totalScore = totalScore + Number(categorylist[i].score)
+  
+  const getTotalScore = () =>{
+    for (let i=0 ; i<categorylist.length;i++){
+      totalScore = totalScore + Number(categorylist[i].score)
+      }
     }
-  }
-
-const resetCategoryList= ()=>{
-  for (let i=0 ; i<categorylist.length;i++){
-     categorylist[i].score=[],
-     categorylist[i].selected= false
+  
+  const resetCategoryList= ()=>{
+    for (let i=0 ; i<categorylist.length;i++){
+       categorylist[i].score=[],
+       categorylist[i].selected= false
+      }
     }
-  }
-/*----------------------------- Event Listeners -----------------------------*/
-startButton.addEventListener('click', () =>{
-  gameState = 2
-  play()
-  console.log("Question"+ questionCounter)
-  console.log("Game state"+gameState)
-})
-
-categoryElement.forEach((category) => {
-  category.addEventListener('click',(event) => {
-    questionCounter = 0
-    questionAnswered= false
-    gameState = 1
-    scoreCurrent = 0
-    categorySelected(event)
+  /*----------------------------- Event Listeners -----------------------------*/
+  startButton.addEventListener('click', () =>{
+    gameState = 2
     play()
-    console.log(questionCounter)
+    // console.log("Question"+ questionCounter)
+    // console.log("Game state"+gameState)
   })
-})
-
-
-optionsElement.forEach((option) => {
-  option.addEventListener('click', (event) =>{
-    if (questionAnswered=== false){
-         questionAnswered = true
-          addScore(event)
-          play() 
-          console.log(scoreCurrent)
-          console.log(categorylist)
-    }
-  })
-})
-
-changeQuestionButton.addEventListener('click', () =>{
-  if( questionCounter <= pmQuestions.length-1){
-      questionCounter= questionCounter + 1
-      questionAnswered = false
+  
+  categoryElement.forEach((category) => {
+    category.addEventListener('click',(event) => {
+      questionCounter = 0
+      questionAnswered= false
+      gameState = 1
+      scoreCurrent = 0
+      categorySelected(event)
       play()
-      console.log("Question"+ questionCounter)
-      console.log("Game state"+gameState)
-      
+      // console.log(questionCounter)
+    })
+  })
+  
+  
+  optionsElement.forEach((option) => {
+    option.addEventListener('click', (event) =>{
+      if (questionAnswered=== false){
+           questionAnswered = true
+            addScore(event)
+            play() 
+            // console.log(scoreCurrent)
+            // console.log(categorylist)
+      }
+    })
+  })
+  
+  changeQuestionButton.addEventListener('click', () =>{
+    if( questionCounter <= pmQuestions.length-1){
+        questionCounter= questionCounter + 1
+        questionAnswered = false
+        play()
+        // console.log("Question"+ questionCounter)
+        // console.log("Game state"+gameState)
+        
+      }
+    }
+  )
+  
+  completedCategoryButton.addEventListener('click',() =>{
+    gameState= 4
+    saveScore()
+    getTotalScore()
+    play()
+    // console.log(optionsElement)
+    // console.log(totalScore)
+    // console.log("Game state"+gameState)
+    // console.log(scoreCurrent)
+    console.log(totalScore)
+  })
+  
+  restartButton.addEventListener('click',() =>{
+    gameState=0
+    scoreCurrent = 0
+    questionCounter = 0
+    questionAnswered = false
+    correctWrong = false
+    currentCategory =""
+    selectedCategoryQuestions= []
+    resetCategoryList()
+    resetCategoryContainer()
+    totalScore = 0
+    Start()
+  })
+  /*----------------------------- Renders -----------------------------*/
+  const Start = () => {
+    if (gameState === 0){
+       displayStartMenu()
+       resetDisplayResults()
+       resetChangeQuestionButton()
+       removeQuestion()
+       removeOptions()
+       resetdisplayScore()
+       resetCategoryContainer()
+       resetCompletedCategoryButton()
+       removeRestartButton()
+       resetNextLevelContainer()
     }
   }
-)
+  const play = () => {
+    if (gameState === 1 ){
+    if (questionAnswered=== false ){
+      displayQuestion()
+      displayOptions()
 
-completedCategoryButton.addEventListener('click',() =>{
-  gameState= 4
-  saveScore()
-  getTotalScore()
-  play()
-  console.log(categorylist)
-  console.log(totalScore)
-})
-
-resetButton.addEventListener('click',() =>{
-  gameState=0
-  scoreCurrent = 0
-  questionCounter = 0
-  questionAnswered = false
-  correctWrong = false
-  currentCategory =""
-  selectedCategoryQuestions= []
-  resetCategoryList()
-  Start()
-})
-/*----------------------------- Renders -----------------------------*/
-const Start = () => {
-  if (gameState === 0){
-     displayinit()
-     resetDisplayResults()
-     resetChangeQuestionButton()
-     resetQuestion()
-     resetOptiona()
-     resetOptionb()
-     resetOptionc()
-     resetOptiond()
-     resetdisplayScore()
-     resetCompletedCategoryButton()
-     removeResetButton()
-     resetNextLevelContainer()
-  }
-}
-const play = () => {
-  if (gameState === 1 ){
-  if (questionAnswered=== false ){
-    displayQuestion()
-    displayOptiona()
-    displayOptionb()
-    displayOptionc()
-    displayOptiond()
-
-    resetCategoryContainer()
-    resetDisplayResults()
-    resetChangeQuestionButton()
-    resetNextLevelContainer()
+      resetCategoryContainer()
+      resetDisplayResults()
+      resetChangeQuestionButton()
+      resetNextLevelContainer()
+      
+      displayRestartButton()
+    }
+      
+  if (questionAnswered === true ){
+    console.log(correctWrong)
+    displayCompareContainer()
+    displayScore()
+    displayResults()
+    displayChangeQuestionButton()
     
-    displayRestartButton()
   }
-    
-if (questionAnswered === true ){
-  displayCompareContainer()
-  displayScore()
-  displayResults()
-  displayChangeQuestionButton()
-  console.log()
-}
-
-if ((questionCounter === selectedCategoryQuestions.length-1) && (questionAnswered === true)){
-  displayCompletedCategoryButton()
-  scoreArray.push(questionCounter)
-  // console.log(scoreArray)
-}
-
-}
-
-if (gameState === 4){
-  if(scoreCurrent < 4){
-    removeStart()
-    resetDisplayResults()
-    resetChangeQuestionButton()
-    resetQuestion()
-    resetOptiona()
-    resetOptionb()
-    resetOptionc()
-    resetOptiond()
-    resetdisplayScore()
-    nextLevelContainer.innerText= currentCategory+ ": "+ scoreCurrent+ " / 6. "+ "You failed. "
-    displayRestartButton()
-    resetCompletedCategoryButton()
+  
+  if ((questionCounter === selectedCategoryQuestions.length-1) && (questionAnswered === true)){
+    displayCompletedCategoryButton()
+    // console.log(scoreArray)
   }
-  if(scoreCurrent>= 4 && totalScore >=22 ){
+  
+  }
+  
+  if (gameState === 4){
+    if(scoreCurrent < 4){
+      removeStart()
+      resetDisplayResults()
+      resetChangeQuestionButton()
+      removeQuestion()
+      removeOptions()
+      resetdisplayScore()
+      nextLevelContainer.classList.remove('hide')
+      nextLevelContainer.innerText= currentCategory+ ": "+ scoreCurrent+ " / 6. "+ "You failed. "
+      displayRestartButton()
+      resetCompletedCategoryButton()
+      
+      // console.log("fail with 2 points, restart quiz")
+    }
+
+    if(scoreCurrent >= 4 && totalScore <=20 ){
+  
     displayCategoryContainer()
     removeStart()
     displayRestartButton()
     resetDisplayResults()
     resetChangeQuestionButton()
-    resetQuestion()
-    resetOptiona()
-    resetOptionb()
-    resetOptionc()
-    resetOptiond()
+    console.log(optionsElement)
+    removeQuestion()
+    removeOptions()
     resetdisplayScore()
     resetCompletedCategoryButton()
-    nextLevelContainer.innerText= "Well done ! You got completed all categories! " + totalScore + " / 24."
+    // console.log(totalScore)
+    // console.log('pass catgegory, next category')
+    nextLevelContainer.classList.remove('hide')
+    nextLevelContainer.innerText= ` ${currentCategory}: ${scoreCurrent} / 6. You passed! Pick your next category`
     }
-  if(scoreCurrent >= 4 && totalScore <=20 ){
+
+    if(scoreCurrent>= 4 && totalScore >=22 ){
+  
+      displayCategoryContainer()
+      removeStart()
+      displayRestartButton()
+      resetDisplayResults()
+      resetChangeQuestionButton()
+      removeQuestion()
+      removeOptions()
+      resetdisplayScore()
+      resetCompletedCategoryButton()
+      // console.log("final win")
+      nextLevelContainer.classList.remove('hide')
+      nextLevelContainer.innerText= "Well done ! You got completed all categories! " + totalScore + " / 24."
+      }
+
+    }
+  if (gameState === 2){
   displayCategoryContainer()
   removeStart()
-  displayRestartButton()
   resetDisplayResults()
   resetChangeQuestionButton()
-  resetQuestion()
-  resetOptiona()
-  resetOptionb()
-  resetOptionc()
-  resetOptiond()
+  removeOptions()
   resetdisplayScore()
   resetCompletedCategoryButton()
-  console.log(totalScore)
-  nextLevelContainer.innerText= ` ${currentCategory}: ${scoreCurrent} / 6. You passed! Pick your next category`
   }
   }
-if (gameState === 2){
-displayCategoryContainer()
-removeStart()
-resetDisplayResults()
-resetChangeQuestionButton()
-resetQuestion()
-resetOptiona()
-resetOptionb()
-resetOptionc()
-resetOptiond()
-resetdisplayScore()
-resetCompletedCategoryButton()
-}
-}
-
-
-Start()
+  
+  Start()
