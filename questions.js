@@ -66,6 +66,17 @@ export const pmQuestions = [
         category : "Contract Management"
       },
       {
+        question: "  Which of the following native tree species is commonly chosen in Singapore’s park development for its low maintenance requirements?",
+        answers:[
+        "Tembusu (Fagraea fragrans)",
+        "Rain Tree (Samanea saman)",
+        "African Mahogany (Khaya senegalensis)",
+        "Angsana (Pterocarpus indicus)",
+        ],
+        correctAnswer: "Tembusu (Fagraea fragrans)",
+        category : "Horticulture"
+    },
+      {
         question: "What is one of the main benefits of planting native trees in Singapore's urban landscapes?",
         answers:[
           "Native trees require more frequent watering than non-native species",
@@ -87,17 +98,7 @@ export const pmQuestions = [
            correctAnswer: "By using native and adaptive plants that reduce maintenance and water needs",
            category : "Horticulture"
           },
-          {
-            question: "  Which of the following native tree species is commonly chosen in Singapore’s park development for its low maintenance requirements?",
-            answers:[
-            "Tembusu (Fagraea fragrans)",
-            "Rain Tree (Samanea saman)",
-            "African Mahogany (Khaya senegalensis)",
-            "Angsana (Pterocarpus indicus)",
-            ],
-            correctAnswer: "Tembusu (Fagraea fragrans)",
-            category : "Horticulture"
-          },
+
           {
             question: "Which of the following native tree species is commonly chosen in Singapore’s park development for its low maintenance requirements?",
             answers:[

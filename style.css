@@ -1,4 +1,9 @@
+.lexend-<uniquifier> {
 
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
 
 body {
   margin: 0;
@@ -9,6 +14,7 @@ body {
   padding: 32px 72px;
   min-width: 320px;
   min-height: 100vh;
+  font-family: "Lexend", serif;
 }
 
 
@@ -21,14 +27,24 @@ body {
   flex-direction: row;
   font-size: 1 em;
   flex-wrap: wrap;
-  justify-content: flex-start
+  justify-content: flex-start;
+  font-weight: bold
 }
 
+#question {
+  
+}
 .show {
   display: block;
 }
+
 .hide {
   display: none;
+}
+
+.greyoutoptions {
+  color: gainsboro;
+  border-style: hidden;
 }
 
 .options {
@@ -37,9 +53,9 @@ body {
   border-radius: 20px;
   border-style:inset;
   background-color: white;
-  border-color: yellowgreen;
   margin: 10px;
-  /* display: flex; */
+  justify-content: flex-start ;
+  display: flex;
   /* flex-direction: row; */
   font-size: 1em;
   /* gap :10px; */
@@ -51,6 +67,7 @@ body {
   padding: 20px 10px;
   border-radius: 20px;
   border-style:groove;
+  color: white;
   background-color: yellowgreen;
 
   margin: 10px;
@@ -69,10 +86,39 @@ body {
 
 #restart {
   border-radius: 50px;
-  height: 30px;
-  font-size: small;
+  height: 50px;
   margin: 20px;
-  align-items: ;
+
+}
+
+.bottombutton {
+  border-radius: 10px;
+  background-color:yellowgreen;
+  margin: 20px;
+  align-content: center;
+  text-align: center ;
+  border-style:groove;
+  width: 200px;
+  height: 30px;
+}
+
+
+.bold {
+  font-size: 1 em;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  font-weight: bold;
+  padding: 5px
+}
+
+
+#questionpage{
+  background-color: rgba(255,255,255,0.7);
+  width:500px;
+  padding: 20px 20px;
+  border-radius: 30px;
+  border-color: aqua;
+  font: 200px;
 }
 /* 
 div {

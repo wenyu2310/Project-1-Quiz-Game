@@ -31,6 +31,7 @@ import { pmQuestions } from "./questions";
   
   const scoreContainer = document.getElementById("score");
   
+  const questionPage = document.getElementById('questionpage');
   const questionContainer = document.getElementById('question');
   const optionsContainer = document.getElementById('optionscontainer');
   const optionsElement = document.querySelectorAll('.options')
@@ -91,8 +92,10 @@ import { pmQuestions } from "./questions";
   
     const displayQuestion =() => {
       questionContainer.innerText = selectedCategoryQuestions[questionCounter].question
+      questionPage.classList.remove('hide')
     }
     const removeQuestion =() => {
+      questionPage.classList.add('hide')
       questionContainer.innerText = ""
       questionContainer.classList.add("hide")
     }
@@ -101,12 +104,13 @@ import { pmQuestions } from "./questions";
     const displayOptions=() =>{
       optionsContainer.classList.remove('hide')
       for(let i=0; i<optionsElement.length; i++){
+          optionsElement[i].classList.add('hover')
           optionsElement[i].classList.remove('hide')
+          optionsElement[i].classList.remove('greyoutoptions')
           optionsElement[i].innerText =selectedCategoryQuestions[questionCounter].answers[i]
         }
       }
     
-
       const removeOptions=() => {
         optionsContainer.classList.add('hide')
         for(let i=0; i<optionsElement.length; i++){
@@ -116,6 +120,13 @@ import { pmQuestions } from "./questions";
       }
 
     }
+
+    const greyOptions=() => {
+      for(let i=0; i<optionsElement.length; i++){
+        optionsElement[i].classList.add('greyoutoptions')
+        optionsElement[i].classList.remove('hover')
+    }
+  }
   
     const displayResults =() => {
       resultsContainer.classList.remove('hide')
@@ -331,7 +342,9 @@ import { pmQuestions } from "./questions";
     displayCompareContainer()
     displayScore()
     displayResults()
+    greyOptions()
     displayChangeQuestionButton()
+    
     
   }
   
