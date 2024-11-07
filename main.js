@@ -50,8 +50,8 @@ import { pmQuestions } from "./questions";
   const nextLevelContainer = document.getElementById('nextLevel')
   const restartButton = document.getElementById('restart')
 
-  const yaySound = new Audio('cartoon-yay-140921.mp3')
-  const oopsSound= new Audio('high-pitch-oops-46055.mp3')
+  const yaySound = new Audio('public/cartoon-yay-140921.mp3')
+  const oopsSound= new Audio('public/high-pitch-oops-46055.mp3')
   /*---------------------------- Variables (state) ----------------------------*/
   let gameState = 0 
   let scoreCurrent = 0
