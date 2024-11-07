@@ -50,6 +50,8 @@ import { pmQuestions } from "./questions";
   const nextLevelContainer = document.getElementById('nextLevel')
   const restartButton = document.getElementById('restart')
 
+  const yaySound = new Audio('cartoon-yay-140921.mp3')
+  const oopsSound= new Audio('high-pitch-oops-46055.mp3')
   /*---------------------------- Variables (state) ----------------------------*/
   let gameState = 0 
   let scoreCurrent = 0
@@ -227,7 +229,9 @@ import { pmQuestions } from "./questions";
   }
   
   const getTotalScore = () =>{
+    
     for (let i=0 ; i<categorylist.length;i++){
+
       totalScore = totalScore + Number(categorylist[i].score)
       }
     }
@@ -238,12 +242,15 @@ import { pmQuestions } from "./questions";
        categorylist[i].selected= false
       }
     }
+
+  
   /*----------------------------- Event Listeners -----------------------------*/
   startButton.addEventListener('click', () =>{
     gameState = 2
     play()
     // console.log("Question"+ questionCounter)
     // console.log("Game state"+gameState)
+
   })
   
   categoryElement.forEach((category) => {
@@ -286,6 +293,7 @@ import { pmQuestions } from "./questions";
   completedCategoryButton.addEventListener('click',() =>{
     gameState= 4
     saveScore()
+    totalScore=0
     getTotalScore()
     play()
     // console.log(optionsElement)
@@ -293,6 +301,9 @@ import { pmQuestions } from "./questions";
     // console.log("Game state"+gameState)
     // console.log(scoreCurrent)
     console.log(totalScore)
+    console.log(categorylist)
+   
+
   })
   
   restartButton.addEventListener('click',() =>{
@@ -344,7 +355,8 @@ import { pmQuestions } from "./questions";
     displayResults()
     greyOptions()
     displayChangeQuestionButton()
-    
+
+    console.log(totalScore)
     
   }
   
@@ -357,6 +369,8 @@ import { pmQuestions } from "./questions";
   
   if (gameState === 4){
     if(scoreCurrent < 4){
+      oopsSound.volume =1
+      oopsSound.play()
       removeStart()
       resetDisplayResults()
       resetChangeQuestionButton()
@@ -373,21 +387,25 @@ import { pmQuestions } from "./questions";
 
     if(scoreCurrent >= 4 && totalScore <=20 ){
   
+    yaySound.volume = 1
+    yaySound.play()
     displayCategoryContainer()
     removeStart()
     displayRestartButton()
     resetDisplayResults()
     resetChangeQuestionButton()
-    console.log(optionsElement)
+    // console.log(optionsElement)
     removeQuestion()
     removeOptions()
     resetdisplayScore()
     resetCompletedCategoryButton()
-    // console.log(totalScore)
+    console.log(totalScore)
     // console.log('pass catgegory, next category')
     nextLevelContainer.classList.remove('hide')
     nextLevelContainer.innerText= ` ${currentCategory}: ${scoreCurrent} / 6. You passed! Pick your next category`
-    }
+    catSays.volume = .05
+    
+  }
 
     if(scoreCurrent>= 4 && totalScore >=22 ){
   
