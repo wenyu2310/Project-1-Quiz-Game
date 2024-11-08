@@ -20,6 +20,9 @@ body {
 
 #startcontainer {
   background-image: url('https://a61.com.sg/assets/img/site_images/RRNP-Quarry-View.jpg');
+  background-size: 100%;
+  background-position: center;
+  background-repeat:no-repeat
 }
 
 #question {
@@ -31,9 +34,6 @@ body {
   font-weight: bold
 }
 
-#question {
-  
-}
 .show {
   display: block;
 }
