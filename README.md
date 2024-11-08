@@ -42,11 +42,6 @@ This quiz game aims to share the knowledge on the different aspects behind build
 - More questions and categories
 - Display scores for each categories at the end of the game
 
-
-
-  
-Present your game idea :idea:  (if it’s not a well known game :video_game:)
-Demo your game -> win :trophy: / lose :cry: or different endings :end:
-Show off  :presents: your fav :hearteyes: Javascript :javascript:  code
-Reflect :mirror: on your learning -> difficult parts, what you could do :+1::skin-tone-3: better, future :crystal_ball:  plans etc
-Answer any questions :question_block: by us or others
+## Reflections
+- The good : learned to separate my JS items and the HTML DOM controls
+- The bad: struggle with scope issues over the course. Made many syntax errors. 
