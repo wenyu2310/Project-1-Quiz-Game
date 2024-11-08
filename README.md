@@ -37,6 +37,10 @@ This quiz game aims to share the knowledge on the different aspects behind build
 - CSS help: w3schools
 - Instructor : simon lau
 
+## Planned future enhancements
+- Highlight the correct answer instead of displaying as line text
+- More questions and categories
+- Display scores for each categories at the end of the game
 
 
 
