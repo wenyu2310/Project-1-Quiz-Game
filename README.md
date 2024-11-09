@@ -1,6 +1,8 @@
 # Developing a 'Build a Nature Park?" Quiz Game
 ![image](https://github.com/user-attachments/assets/7e0ca4ac-7044-4883-add7-c9194c9d51d4)
 
+## Link to Game
+https://lucent-stroopwafel-d04899.netlify.app/
 
 ## Project Brief
 This quiz game aims to share the knowledge on the different aspects behind building Nature Parks in Singapore. This is to help foster greater understanding between the various internal stakeholders to help improve the project collaboration. 
